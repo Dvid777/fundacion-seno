@@ -12,7 +12,7 @@ enrutadorGaleria.route('/galeria').get(galeriaController.listarGaleria);
 
 enrutadorGaleria.route('/galeria/:id_galeria').delete(galeriaController.eliminarGaleria);
 
-enrutadorGaleria.route('/galeria/:id').put(galeriaController.actualizarGaleria);
+enrutadorGaleria.route('/galeria/:id_galeria').put(galeriaController.actualizarGaleria);
 
 enrutadorGaleria.route('/galeria-imagen/:id_galeria').get(galeriaController.obtenerGaleria);
 

@@ -63,4 +63,10 @@ export class GaleriaService {
    {
      return this.http.delete('http://localhost:3000/galeria/'+id_galeria);
    }
+
+   updateGaleria(datosGaleria:IGaleria)
+   {
+     let id_galeria = datosGaleria.id_galeria;
+    return this.http.put('http://localhost:3000/galeria/'+id_galeria ,datosGaleria);
+   }
 }

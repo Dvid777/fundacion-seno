@@ -13,6 +13,8 @@ cloudinary.v2.config({
 
 export class GaleriaController
 {
+
+
     public async listarGaleria(req:Request,res:Response)
     {
         const db= await conexion();
@@ -86,16 +88,25 @@ export class GaleriaController
 
     public async actualizarGaleria(req:Request,res:Response)
     {
- 
-        let id_galeria = req.params.id;
+        if(!req.files)
+        {
+            let unaGaleria = req.body;
 
-        let gale = req.body;
+            const updateGaleria = {
+                descripcion:req.body.descripcion,
+                fecha:req.body.fecha,
+                localidad:req.body.console.localidad,
+                categoria:req.body.categoria,
+                tipo:req.body.tipo,
+                estado_home:req.body.estado_home
+            }
 
-        let conex = await conexion();
+            const db = await conexion();
 
-        await conex.query('update galeria set ? where id_galeria = ? ', [gale,id_galeria]);
+            await db.query('update galeria set ? where id_galeria = ?',[updateGaleria,req.body.id_galeria]);
 
-        return res.json('El elemento se actualizo exitosamente');
+            return res.json('Se actualizo la Galeria');
+        }
     }
 
     public async obtenerGaleria(req:Request,res:Response)
