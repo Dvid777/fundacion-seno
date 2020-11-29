@@ -22,6 +22,7 @@ export class GaleriaController
         //poner imagenes en portada = 0
        const portadasEnEstadoCero = {
             portada:0,
+            
        }
 
        await db.query('update img_galeria set ?',[portadasEnEstadoCero]);

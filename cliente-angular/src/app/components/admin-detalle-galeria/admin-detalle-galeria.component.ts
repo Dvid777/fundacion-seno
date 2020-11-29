@@ -16,6 +16,7 @@ export class AdminDetalleGaleriaComponent implements OnInit {
   id_galeria:number
 
   imagenes_galeria:IGaleriaDetalle[] = [];
+  
 
   formDetalleGaleria:FormGroup;
 

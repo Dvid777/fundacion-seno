@@ -22,6 +22,7 @@ export class AdminDetalleEventoComponent implements OnInit {
   archivos:FileList;
 
   imagenes_leidas = [];
+  
 
   constructor(private spinner:NgxSpinnerService, private fb:FormBuilder, private activatedRoute:ActivatedRoute,private eventoServ:EventoService) 
   {
