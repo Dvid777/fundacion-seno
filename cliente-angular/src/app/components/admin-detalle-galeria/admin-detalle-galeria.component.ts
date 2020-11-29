@@ -22,6 +22,8 @@ export class AdminDetalleGaleriaComponent implements OnInit {
   archivos:FileList;
 
   imagenes_leidas = [];
+
+  deshabilitar_boton:any = '';
   
   constructor(private spinner:NgxSpinnerService ,private fb:FormBuilder, private activateRoute:ActivatedRoute, private galeriaServ:GaleriaService) { 
     this.formDetalleGaleria = this.fb.group({
@@ -91,5 +93,16 @@ export class AdminDetalleGaleriaComponent implements OnInit {
       );
     }
     
+  }
+
+
+  establecerPortada(id_img_galeria:number)
+  {
+    this.galeriaServ.assingPortada(id_img_galeria).subscribe(
+      resultado => {
+        //refrescamos la grilla
+        this.listarImagenGaleria(this.id_galeria);
+      }
+    );
   }
 }

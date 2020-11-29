@@ -16,11 +16,28 @@ const database_1 = require("../database");
 const fs_extra_1 = __importDefault(require("fs-extra"));
 const cloudinary_1 = __importDefault(require("cloudinary"));
 cloudinary_1.default.v2.config({
-    cloud_name: 'depxqeimu',
-    api_key: '319511783793755',
-    api_secret: 'ct-xrgsM7GwILBH6HHpRATy2Kmc'
+    cloud_name: 'dj7l5ojza',
+    api_key: '566266184157444',
+    api_secret: 'Y3au0dyhsbHHgKNPK2pg67Vb_h8'
 });
 class GaleriaController {
+    establecerPortada(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let id_img_galeria = req.params.id_img_galeria;
+            const db = yield database_1.conexion();
+            //poner imagenes en portada = 0
+            const portadasEnEstadoCero = {
+                portada: 0,
+            };
+            yield db.query('update img_galeria set ?', [portadasEnEstadoCero]);
+            //establecer como portada alguna imagen
+            const datosImgGaleria = {
+                portada: 1,
+            };
+            yield db.query('update img_galeria set ? where id_img_galeria = ?', [datosImgGaleria, id_img_galeria]);
+            res.json('Se establecio Portada');
+        });
+    }
     listarGaleria(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield database_1.conexion();
