@@ -28,10 +28,12 @@ export class AdminGaleriaComponent implements OnInit {
 
   imagenes_url = [];
 
+  ocultar_botom_file:any = 'display:block';
+
   constructor(private router:Router, private galeriaServ:GaleriaService, private spinner: NgxSpinnerService, private fb: FormBuilder, private localidadServ:LocalidadService, private categoriaServ:CategoriaGaleriaService) { 
 
       this.formGaleria = this.fb.group({
-        id_galeria:[''],
+        id_galeria:[null],
         descripcion:['',[Validators.required, Validators.minLength(3)]],
         fecha:['',[Validators.required]],
         localidad:['',[Validators.required]],
@@ -76,18 +78,15 @@ export class AdminGaleriaComponent implements OnInit {
 
   guardarGaleria(){
     if (this.formGaleria.value.id_galeria){
-    this.spinner.show();
-    this.galeriaServ.saveGaleria(this.formGaleria.value, this.file).subscribe(
-      resultado =>{
-          console.log(resultado);
-          this.imagenes_url = [];
-          this.formGaleria.reset();
+      this.spinner.show();
+      this.galeriaServ.updateGaleria(this.formGaleria.value).subscribe(
+        resultado =>{
           this.obtenerGaleria();
-
+          this.formGaleria.reset();
           this.spinner.hide();
-      },
-      error => console.log(error)
-    )
+        }
+      )
+    
     }else{
     this.spinner.show();
     this.galeriaServ.saveGaleria(this.formGaleria.value,this.file).subscribe(
@@ -146,5 +145,36 @@ export class AdminGaleriaComponent implements OnInit {
       );
     }
 
+  }
+  //llenar el formulario
+  editarGaleria(datosGaleria:IGaleria)
+  {
+    this.ocultar_botom_file = 'display:none'
+    this.formGaleria.setValue({
+      id_galeria:datosGaleria.id_galeria,
+      descripcion:datosGaleria.descripcion,
+      fecha:datosGaleria.fecha,
+      localidad:datosGaleria.localidad,
+      categoria:datosGaleria.categoria,
+      tipo:datosGaleria.tipo,
+      estado_home:datosGaleria.estado_home,
+      file:''
+    });
+  }
+
+  vaciarForm()
+  {
+    this.ocultar_botom_file ='display:block';
+
+    this.formGaleria.setValue({
+      id_galeria:null,
+      descripcion:'',
+      fecha:'',
+      localidad:'',
+      categoria:'',
+      tipo:'',
+      estado_home:'',
+      file:''
+    })
   }
 }

@@ -16,6 +16,7 @@ export class AdminDetalleGaleriaComponent implements OnInit {
   id_galeria:number
 
   imagenes_galeria:IGaleriaDetalle[] = [];
+  
 
   formDetalleGaleria:FormGroup;
 
@@ -93,5 +94,16 @@ export class AdminDetalleGaleriaComponent implements OnInit {
       );
     }
     
+  }
+
+
+  establecerPortada(id_img_galeria:number)
+  {
+    this.galeriaServ.assingPortada(id_img_galeria).subscribe(
+      resultado => {
+        //refrescamos la grilla
+        this.listarImagenGaleria(this.id_galeria);
+      }
+    );
   }
 }

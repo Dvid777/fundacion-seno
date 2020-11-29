@@ -15,9 +15,12 @@
                 <td>
                     <img style="height: 175px;" class="img-fluid" [src]="fila.imagen" alt="" srcset="">
                 </td>
-                <td><button (click)="eliminarImagenSeleccionada(fila.id_img_galeria, fila.public_id)" class="btn btn-danger">Eliminar</button></td>
+                <td><button (click)="eliminarImagenSeleccionada(fila.id_img_galeria, fila.public_id)" class="btn btn-danger">Eliminar</button>
+                    <button [disabled]="fila.portada == 1 ? true:false" (click)="establecerPortada(fila.id_img_galeria)" class="btn btn-info">Establecer como Portada</button>
+                </td>
                 </tr>
             </tbody>
+            
         </table>
 
     </div>

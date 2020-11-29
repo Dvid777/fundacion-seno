@@ -5,14 +5,39 @@ import fs from "fs-extra";
 import cloudinary from "cloudinary";
 
 cloudinary.v2.config({
-    cloud_name:'depxqeimu',
-    api_key:'319511783793755',
-    api_secret:'ct-xrgsM7GwILBH6HHpRATy2Kmc'
+    cloud_name:'dj7l5ojza',
+    api_key:'566266184157444',
+    api_secret:'Y3au0dyhsbHHgKNPK2pg67Vb_h8'
 
 });
 
 export class GaleriaController
 {
+    public async establecerPortada(req:Request, res:Response)
+    {
+        let id_img_galeria = req.params.id_img_galeria;
+
+        const db = await conexion();
+
+        //poner imagenes en portada = 0
+       const portadasEnEstadoCero = {
+            portada:0,
+            
+       }
+
+       await db.query('update img_galeria set ?',[portadasEnEstadoCero]);
+
+        //establecer como portada alguna imagen
+        const datosImgGaleria={
+            portada:1,
+        }
+
+
+        await db.query('update img_galeria set ? where id_img_galeria = ?',[datosImgGaleria,id_img_galeria]);
+    
+        res.json('Se establecio Portada');
+    }
+
     public async listarGaleria(req:Request,res:Response)
     {
         const db= await conexion();
@@ -86,16 +111,25 @@ export class GaleriaController
 
     public async actualizarGaleria(req:Request,res:Response)
     {
- 
-        let id_galeria = req.params.id;
+        if(!req.files)
+        {
+            let unaGaleria = req.body;
 
-        let gale = req.body;
+            const updateGaleria = {
+                descripcion:req.body.descripcion,
+                fecha:req.body.fecha,
+                localidad:req.body.console.localidad,
+                categoria:req.body.categoria,
+                tipo:req.body.tipo,
+                estado_home:req.body.estado_home
+            }
 
-        let conex = await conexion();
+            const db = await conexion();
 
-        await conex.query('update galeria set ? where id_galeria = ? ', [gale,id_galeria]);
+            await db.query('update galeria set ? where id_galeria = ?',[updateGaleria,req.body.id_galeria]);
 
-        return res.json('El elemento se actualizo exitosamente');
+            return res.json('Se actualizo la Galeria');
+        }
     }
 
     public async obtenerGaleria(req:Request,res:Response)
